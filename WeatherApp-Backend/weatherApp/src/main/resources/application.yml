@@ -1,0 +1,124 @@
+# Logger
+logging.level:
+  web: DEBUG
+  "[com.bptn.weatherapp]": DEBUG
+  "[org.hibernate.type]": INFO
+
+# Actuator Enabled
+management.endpoints:
+  web.exposure.include: "*"
+
+# Active Profile
+spring:
+  profiles:
+    active: prod
+
+  # DevTools Enabled
+  devtools:
+    add-properties: true
+
+  # Jackson Settings
+  jackson:
+    time-zone: America/Toronto
+    date-format: "yyyy-MM-dd HH:mm:ss"
+
+  # Email Settings
+  mail:
+    username:
+    password:
+    host: smtp.gmail.com
+    port:
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  # Common Database Settings
+  sql:
+    init:
+      continue-on-error: false
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
+      hibernate:
+        "[format_sql]": true
+    hibernate:
+      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+---
+# Default Profile
+spring:
+  config:
+    activate:
+      on-profile: default
+
+  # Database Settings
+  datasource:
+    url:
+    username: doadmin
+    password:
+    hikari:
+      maximum-pool-size: 2
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+---
+# Prod Profile
+server:
+  port: 8080
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  # Database Settings
+  datasource:
+    url:
+    username: doadmin
+    password:
+    hikari:
+      maximum-pool-size: 2
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+---
+# Test Profile
+
+server:
+  port: 8080
+
+spring:
+  config:
+    activate.on-profile: test
+
+  # Database Settings
+  sql.init:
+    mode: always
+    continue-on-error: false
+  datasource:
+    url:
+    username:
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    hibernate.ddl-auto: create-drop
+    defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: true

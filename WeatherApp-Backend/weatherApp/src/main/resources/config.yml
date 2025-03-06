@@ -1,0 +1,41 @@
+# JWT Configuration
+jwt:
+  secret:
+  expiration: 86_400_000 # 24 hours
+  issuer: "Obsidi Academy"
+  audience: WeatherApp
+  prefix: "Bearer "
+  excluded.urls: >
+    /user/login,
+    /user/signup,
+    /user/reset/*,
+    /test/**,
+    /actuator/**,
+    /error
+
+# Open Weather API Configuration
+api:
+  key:
+  base:
+    url:
+# Client Configuration
+client:
+  url:
+  email:
+    verify:
+      param: verify
+      expiration: 86_400_000 # 24 hours
+    reset:
+      param: reset
+      expiration: 86_400_000 # 24 hours
+
+# H2 Server Configuration
+h2.server:
+  params: >
+    -tcp, 
+    -tcpAllowOthers, 
+    -tcpPort, 
+    9091
+
+# Maximum Number Of Favourite Cities Per User
+max_favourite_cities: 8
